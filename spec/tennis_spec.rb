@@ -4,14 +4,14 @@ class TennisScorer
     @score = "Love"
   end
 
+  SCORE = {
+    "Love" => "Fifteen",
+    "Fifteen" => "Thirty",
+    "Thirty" => "Forty"
+  }.freeze
+
   def won_point
-    if @score == "Love"
-      @score = "Fifteen"
-    elsif @score == "Fifteen"
-      @score = "Thirty"
-    end
-    
-    
+    @score = SCORE[@score]
   end
 
   def score
@@ -38,6 +38,11 @@ describe TennisScorer do
   it 'can score game after player one has scored twice' do
     2.times { tennis_scorer.won_point }
     expect_score_to_equal('Thirty-Love')
+  end
+
+  it 'can score game after player one has scored three times' do
+    3.times { tennis_scorer.won_point }
+    expect_score_to_equal('Forty-Love')
   end
   
 end
