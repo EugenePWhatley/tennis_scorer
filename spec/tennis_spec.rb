@@ -1,7 +1,8 @@
 class TennisScorer
 
   def initialize
-    @score = "Love"
+    @player_one_score = "Love"
+    @player_two_score = "Love"
   end
 
   SCORE = {
@@ -10,12 +11,17 @@ class TennisScorer
     "Thirty" => "Forty"
   }.freeze
 
-  def won_point
-    @score = SCORE[@score]
+  def player_1_scored
+    @player_one_score = SCORE[@player_one_score]
   end
 
+  def player_2_scored
+    @player_two_score = SCORE[@player_two_score]
+  end
+  
+
   def score
-    "#{@score}-Love"
+    "#{@player_one_score}-#{@player_two_score}"
   end
 end
 
@@ -31,18 +37,32 @@ describe TennisScorer do
   end
 
   it 'can score game after player one has scored once' do
-    tennis_scorer.won_point
+    tennis_scorer.player_1_scored
     expect_score_to_equal('Fifteen-Love')
   end
 
   it 'can score game after player one has scored twice' do
-    2.times { tennis_scorer.won_point }
+    2.times { tennis_scorer.player_1_scored }
     expect_score_to_equal('Thirty-Love')
   end
 
   it 'can score game after player one has scored three times' do
-    3.times { tennis_scorer.won_point }
+    3.times { tennis_scorer.player_1_scored }
     expect_score_to_equal('Forty-Love')
   end
-  
+
+  it 'can score game after player one has scored once' do
+    tennis_scorer.player_2_scored
+    expect_score_to_equal('Love-Fifteen')
+  end
+
+  it 'can score game after player two has scored twice' do
+    2.times { tennis_scorer.player_2_scored }
+    expect_score_to_equal('Love-Thirty')
+  end
+
+  it 'can score game after player two has scored three times' do
+    3.times { tennis_scorer.player_2_scored }
+    expect_score_to_equal('Love-Forty')
+  end
 end
