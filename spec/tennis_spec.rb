@@ -20,22 +20,24 @@ class TennisScorer
 end
 
 describe TennisScorer do
+  let(:tennis_scorer) { TennisScorer.new } 
+
+  def expect_score_to_equal(expected_score)
+    expect(tennis_scorer.score).to eq(expected_score)
+  end
+
   it 'can score new game when no player has scored' do
-    tennis_scorer = TennisScorer.new
-    expect(tennis_scorer.score).to eq('Love-Love')
+    expect_score_to_equal('Love-Love')
   end
 
   it 'can score game after player one has scored once' do
-    tennis_scorer = TennisScorer.new
     tennis_scorer.won_point
-    expect(tennis_scorer.score).to eq ('Fifteen-Love')
+    expect_score_to_equal('Fifteen-Love')
   end
 
   it 'can score game after player one has scored twice' do
-    tennis_scorer = TennisScorer.new
-    tennis_scorer.won_point
-    tennis_scorer.won_point
-    expect(tennis_scorer.score).to eq ('Thirty-Love')
+    2.times { tennis_scorer.won_point }
+    expect_score_to_equal('Thirty-Love')
   end
   
 end
