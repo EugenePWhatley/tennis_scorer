@@ -5,7 +5,13 @@ class TennisScorer
   end
 
   def won_point
-    @score = "Fifteen"
+    if @score == "Love"
+      @score = "Fifteen"
+    elsif @score == "Fifteen"
+      @score = "Thirty"
+    end
+    
+    
   end
 
   def score
@@ -24,4 +30,12 @@ describe TennisScorer do
     tennis_scorer.won_point
     expect(tennis_scorer.score).to eq ('Fifteen-Love')
   end
+
+  it 'can score game after player one has scored twice' do
+    tennis_scorer = TennisScorer.new
+    tennis_scorer.won_point
+    tennis_scorer.won_point
+    expect(tennis_scorer.score).to eq ('Thirty-Love')
+  end
+  
 end
